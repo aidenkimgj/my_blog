@@ -15,7 +15,9 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "helmet": "^4.4.1",
-    "hpp": "^0.2.3"
+    "hpp": "^0.2.3",
+    "moment": "^2.29.1",
+    "mongoose": "^5.11.12"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.10",
