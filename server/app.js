@@ -7,7 +7,8 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 
 // Routes
-import postsRoutes from './routes/api/post';
+import postRoutes from './routes/api/post';
+import userRoutes from './routes/api/user';
 
 const app = express();
 const { MONGO_URI } = config;
@@ -39,6 +40,7 @@ app.get('/', (req, res) => {
   res.send('HI');
 });
 
-app.use('/api/post', postsRoutes);
+app.use('/api/post', postRoutes);
+app.use('/api/user', userRoutes);
 
 export default app;
