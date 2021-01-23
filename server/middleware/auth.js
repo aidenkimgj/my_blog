@@ -11,6 +11,7 @@ const auth = (req, res, next) => {
       .json({ msg: 'Authentication refused because there was no token!!' });
   }
   try {
+    //jwt payload를 decoded에 저장
     const decoded = jwt.verify(token, JWT_SECRET);
     req.user = decoded;
     // go to next
