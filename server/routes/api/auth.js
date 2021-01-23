@@ -1,0 +1,68 @@
+import express from 'express';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import auth from '../../middleware/auth';
+import config from '../../config/index';
+const { JWT_SECRET } = config;
+
+// Model
+import User from '../../models/user';
+
+const router = express.Router();
+
+// @route     POST   api/auth
+// @desc      Auth   user
+// @access    Public
+router.post('/', (req, res) => {
+  const { email, password } = req.body;
+
+  // Simple Validation
+  if (!email || !password) {
+    return res.status(400).json({ msg: 'Please fill in all field' });
+  }
+  // Check for existing user
+  User.finOne({ email }).then(user => {
+    if (!user) return res.status(400).json({ msg: 'This user does not exist' });
+
+    // Validate password
+    // password = 현재 유저가 오픈한 패스워트 user.password = 위에 email을 통해 찾은 결과값의 패스워드
+    bcrypt.compare(password, user.password).then(isMatch => {
+      if (!isMatch)
+        return res.status(400).json({ msg: 'The password does not match' });
+      jwt.sign(
+        { id: user.id },
+        JWT_SECRET,
+        { expiresIn: '2 days' },
+        (err, token) => {
+          if (err) throw err;
+          res.json({
+            token,
+            user: {
+              id: user.id,
+              name: user.name,
+              email: user.email,
+              role: user.role,
+            },
+          });
+        }
+      );
+    });
+  });
+});
+
+router.post('/logout', (req, res) => {
+  res.json('You have logged out successfully.');
+});
+
+router.get('/user', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password');
+    if (!user) throw Error('The user does not exist!');
+    res.json(user);
+  } catch (e) {
+    console.log(e);
+    res.status(400).json({ msg: e.message });
+  }
+});
+
+export default router;

@@ -7,6 +7,7 @@ const { JWT_SECRET } = config;
 // Model
 import User from '../../models/user';
 
+// 회원 가입 라우터
 const router = express.Router();
 
 // @routes     GET api/user
@@ -47,19 +48,26 @@ router.post('/', (req, res) => {
       email,
       password,
     });
-    // 해쉬값을 만들어 줌
+    // 해쉬값을 만들어 줌 e10 = 1000번을 돌려서 만든다
     bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(newUser.password, salt, (err, hash) => {
         if (err) throw err;
+        // 새로운 유저의 패스워드는 여기서 만든 해쉬 값이 됨
         newUser.password = hash;
+        // 새로운 유저를 저장함
         newUser.save().then(user => {
+          // 만들어진 유저를 json web token에 등록함
           jwt.sign(
+            // id는 새로만든 뉴 유저의 id가 됨
             { id: user.id },
+            // 서버에서 만들어진 웹 토큰을 인증 받기 위해 비밀 값이 필요하다 ( 이 값은 비밀 값이라서 env 파일에 저장한다. )
             JWT_SECRET,
+            // 만기일 임 3600초 = 1시간이라는 소리
             { expiresIn: 3600 },
             (err, token) => {
               if (err) throw err;
               res.json({
+                // 만들어진 토큰
                 token,
                 user: {
                   id: user.id,
