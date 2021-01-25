@@ -6,6 +6,7 @@ import { ConnectedRouter } from 'connected-react-router';
 import store, { history } from './store';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './assets/scss/base.scss';
 
 ReactDOM.render(
   <React.StrictMode>
