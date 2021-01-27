@@ -32,7 +32,7 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         ...action.payload,
-        isAuthentiated: true,
+        isAuthenticated: true,
         isLoading: false,
         userId: action.payload.user.id,
         userRole: action.payload.user.role,
@@ -43,7 +43,7 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         ...action.payload,
-        isAuthentiated: false,
+        isAuthenticated: false,
         isLoading: false,
         user: '',
         userId: '',
