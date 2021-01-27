@@ -5,6 +5,9 @@ import {
   LOGIN_FAILURE,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
+  LOGOUT_FAILURE,
+  LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
 } from '../types';
 
 const initialState = {
@@ -21,6 +24,7 @@ const initialState = {
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
+    case LOGOUT_REQUEST:
     case LOGIN_REQUEST:
       return {
         ...state,
@@ -39,6 +43,7 @@ const authReducer = (state = initialState, action) => {
         errorMsg: '',
       };
     case LOGIN_FAILURE:
+    case LOGOUT_FAILURE:
       localStorage.removeItem('token');
       return {
         ...state,
@@ -51,6 +56,18 @@ const authReducer = (state = initialState, action) => {
         token: '',
         errorMsg: action.payload.data.msg,
       };
+    case LOGOUT_SUCCESS:
+      localStorage.removeItem('token');
+      return {
+        token: '',
+        ueser: '',
+        isAuthenticated: '',
+        isLoading: false,
+        userId: '',
+        userRole: '',
+        errorMsg: '',
+      };
+
     case CLEAR_ERROR_REQUEST:
       return {
         ...state,
