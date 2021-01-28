@@ -8,11 +8,14 @@ import {
   LOGOUT_FAILURE,
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
+  USER_LOADING_FAILURE,
+  USER_LOADING_REQUEST,
+  USER_LOADING_SUCCESS,
 } from '../types';
 
 const initialState = {
   token: localStorage.getItem('token'),
-  isAuthenticated: null,
+  isAuthenticated: false,
   isLoading: false,
   user: '',
   userId: '',
@@ -60,12 +63,36 @@ const authReducer = (state = initialState, action) => {
       localStorage.removeItem('token');
       return {
         token: '',
-        ueser: '',
+        user: '',
         isAuthenticated: '',
         isLoading: false,
         userId: '',
         userRole: '',
         errorMsg: '',
+      };
+
+    case USER_LOADING_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case USER_LOADING_SUCCESS:
+      return {
+        ...state,
+        isAuthenticated: true,
+        isLoading: false,
+        user: action.payload,
+        userId: action.payload._id,
+        userName: action.payload.name,
+        userRole: action.payload.role,
+      };
+    case USER_LOADING_FAILURE:
+      return {
+        ...state,
+        user: '',
+        isAuthenticated: false,
+        isLoading: false,
+        userRole: '',
       };
 
     case CLEAR_ERROR_REQUEST:
