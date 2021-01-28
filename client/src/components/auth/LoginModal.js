@@ -60,9 +60,11 @@ const LoginModal = () => {
   return (
     <div>
       <NavLink onClick={handleToggle} href="#">
-        Login
+        <Button outline color="light" className="px-3" block>
+          <strong>Login</strong>
+        </Button>
       </NavLink>
-      <Modal isOpen={modal} toggle={handleToggle}>
+      <Modal isOpen={modal} toggle={handleToggle} className="loginModal">
         <ModalHeader toggle={handleToggle}>Login</ModalHeader>
         <ModalBody>
           {localMsg ? <Alert color="danger">{localMsg}</Alert> : null}
