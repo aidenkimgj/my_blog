@@ -19,10 +19,12 @@ const loginUserAPI = loginData => {
     //   'Content-Type': 'application/json',
     // },
   };
+  // 리턴 되는 장소는 call()을 부른곳이다
   return axios.post('api/auth', loginData, config);
 };
 
 function* loginUser(action) {
+  console.log(action);
   try {
     // call() 함수를 동기적으로 실행 call에 넘겨진 함수가 Promise를 리턴하면 그 Promise가 resolved 될 때까지 call()을 호출한 부분에서 실행이 멈춘다
     const result = yield call(loginUserAPI, action.payload);
