@@ -59,6 +59,7 @@ router.post('/logout', (req, res) => {
 });
 
 router.get('/user', auth, async (req, res) => {
+  console.log(req.user.id, 'id');
   try {
     // jwt payload에는 user의 id가 저장되어 있기 때문에 그 id를 가지고 db 조회
     // select에서 password는 빼줌
