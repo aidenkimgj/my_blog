@@ -83,7 +83,7 @@ const AppNavbar = () => {
         <Form className="col p-1">
           <Link onClick={onLogout} to="#" className="text-decoration-none">
             <Button outline color="light" className="mt-1 mb-1 px-3 " block>
-              Logout
+              <b>Logout</b>
             </Button>
           </Link>
         </Form>
