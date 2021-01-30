@@ -12,7 +12,7 @@ import {
 import { Link } from 'react-router-dom';
 import LoginModal from '../components/auth/LoginModal';
 import { useDispatch, useSelector } from 'react-redux';
-import { LOGIN_REQUEST } from '../redux/types';
+import { LOGOUT_REQUEST } from '../redux/types';
 import RegisterModal from './auth/RegisterModal';
 
 const AppNavbar = () => {
@@ -24,7 +24,7 @@ const AppNavbar = () => {
   // useCallback(callback, [변경되는 값])은 useEffect()와 같은 기능을 하지만 변경되기 전까지의 값을 기억한다
   const onLogout = useCallback(() => {
     dispatch({
-      type: LOGIN_REQUEST,
+      type: LOGOUT_REQUEST,
     });
   }, [dispatch]);
 
