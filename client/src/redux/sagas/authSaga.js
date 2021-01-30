@@ -1,12 +1,18 @@
 import axios from 'axios';
 import { all, call, put, takeEvery, fork } from 'redux-saga/effects';
 import {
+  CLEAR_ERROR_FAILURE,
+  CLEAR_ERROR_REQUEST,
+  CLEAR_ERROR_SUCCESS,
   LOGIN_FAILURE,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGOUT_FAILURE,
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
+  REGISTER_FAILURE,
+  REGISTER_REQUEST,
+  REGISTER_SUCCESS,
   USER_LOADING_FAILURE,
   USER_LOADING_REQUEST,
   USER_LOADING_SUCCESS,
@@ -23,7 +29,7 @@ const loginUserAPI = loginData => {
     // },
   };
   // 리턴 되는 장소는 call()을 부른곳이다
-  return axios.post('api/auth', loginData, config);
+  return axios.post('/api/auth', loginData, config);
 };
 
 function* loginUser(action) {
@@ -78,7 +84,7 @@ const userLoadingAPI = token => {
   }
   console.log(config);
   // 리턴 되는 장소는 call()을 부른곳이다 (유저가 존재하는지 확인하는 것이기 때문에 get을 씀)
-  return axios.get('api/auth/user', config);
+  return axios.get('/api/auth/user', config);
 };
 
 function* userLoading(action) {
@@ -104,11 +110,60 @@ function* watchUserLoading() {
   yield takeEvery(USER_LOADING_REQUEST, userLoading);
 }
 
+// Register User
+
+const registerUserAPI = registerData => {
+  console.log(registerData, 'req');
+
+  return axios.post('/api/user', registerData);
+};
+
+function* registerUser(action) {
+  try {
+    const result = yield call(registerUserAPI, action.payload);
+    console.log(result, 'RegisterUser Data');
+    yield put({
+      type: REGISTER_SUCCESS,
+      payload: result.data,
+    });
+  } catch (e) {
+    yield put({
+      type: REGISTER_FAILURE,
+      payload: e.response,
+    });
+  }
+}
+
+function* watchRegisterUser() {
+  yield takeEvery(REGISTER_REQUEST, registerUser);
+}
+
+// clear Error
+
+function* clearError() {
+  try {
+    yield put({
+      type: CLEAR_ERROR_SUCCESS,
+    });
+  } catch (e) {
+    yield put({
+      type: CLEAR_ERROR_FAILURE,
+    });
+    console.error(e);
+  }
+}
+
+function* watchClearError() {
+  yield takeEvery(CLEAR_ERROR_REQUEST, clearError);
+}
+
 export default function* authSaga() {
   // fork() 매개변수로 전달된 함수를 비동기적으로 실행
   yield all([
     fork(watchLoginUser),
     fork(watchLogoutUser),
     fork(watchUserLoading),
+    fork(watchRegisterUser),
+    fork(watchClearError),
   ]);
 }
