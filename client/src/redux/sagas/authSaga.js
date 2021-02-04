@@ -75,6 +75,8 @@ function* watchLogoutUser() {
   yield takeEvery(LOGOUT_REQUEST, logoutUser);
 }
 
+// User loading
+
 const userLoadingAPI = token => {
   const config = {
     header: new Headers(),
