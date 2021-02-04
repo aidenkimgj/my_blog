@@ -1,5 +1,6 @@
 import express from 'express';
 import auth from '../../middleware/auth';
+import moment from 'moment';
 
 // Model
 import Post from '../../models/post';
@@ -119,6 +120,28 @@ router.post('/', auth, uploadS3.none(), async (req, res, next) => {
     return res.redirect(`/api/post/${newPost._id}`);
   } catch (e) {
     console.log(e);
+  }
+});
+
+/*
+ * @route     GET   api/post/:id
+ * @desc      Detail post
+ * @access    Public
+ */
+
+router.get('/:id', async (req, res, next) => {
+  try {
+    const post = await Post.findById(req.params.id)
+
+      .populate('creator', 'name')
+      .populate({ path: 'category', select: 'categoryName' });
+    post.views += 1;
+    post.save();
+    console.log(post);
+    res.json(post);
+  } catch (e) {
+    console.error(e);
+    next(e);
   }
 });
 
