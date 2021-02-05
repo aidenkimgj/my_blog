@@ -79,14 +79,18 @@ function* watchLogoutUser() {
 
 const userLoadingAPI = token => {
   const config = {
-    header: new Headers(),
+    headers: {
+      'Content-Type': 'application/json',
+    },
   };
   if (token) {
     config.headers['x-auth-token'] = token;
   }
   console.log(config);
   // 리턴 되는 장소는 call()을 부른곳이다 (유저가 존재하는지 확인하는 것이기 때문에 get을 씀)
-  return axios.get('/api/auth/user', config);
+  const result = axios.get('/api/auth/user', config);
+  console.log(result, '받아온 값');
+  return result;
 };
 
 function* userLoading(action) {

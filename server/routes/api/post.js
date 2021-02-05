@@ -45,6 +45,7 @@ const uploadS3 = multer({
  * @access    Private
  */
 
+// 경로를 upload로 보내는데 사진을 여러개 보낼 수 있고 5개까지 제한하겠다는 말임 (array 부분이 single이 되면 이미지 파일 한개만 받겠다는 뜻)
 router.post('/image', uploadS3.array('upload', 5), async (req, res, next) => {
   try {
     console.log(req.files.map(v => v.location));

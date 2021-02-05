@@ -43,7 +43,7 @@ function* watchLoadPosts() {
 const uploadPostAPI = payload => {
   console.log(payload, '넘어온 payload');
   const config = {
-    header: new Headers(),
+    headers: new Headers(),
   };
 
   const token = payload.token;
@@ -51,7 +51,10 @@ const uploadPostAPI = payload => {
   if (token) {
     config.headers['x-auth-token'] = token;
   }
-  return axios.post('/api/post', payload, config);
+  console.log(config);
+  const result = axios.post('/api/post', payload, config);
+  console.log(result);
+  return result;
 };
 
 function* uploadPosts(action) {

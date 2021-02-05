@@ -28,9 +28,9 @@ const PostWrite = () => {
 
   const onSubmit = async e => {
     await e.preventDefault();
-    const { title, content, fileUrl, category } = form;
+    const { title, contents, fileUrl, category } = form;
     const token = localStorage.getItem('token');
-    const body = { title, content, fileUrl, category, token };
+    const body = { title, contents, fileUrl, category, token };
     dispatch({
       type: POST_UPLOADING_REQUEST,
       payload: body,
