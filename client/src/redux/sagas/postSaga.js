@@ -1,5 +1,8 @@
 import axios from 'axios';
 import {
+  POST_DETAIL_LOADING_FAILURE,
+  POST_DETAIL_LOADING_REQUEST,
+  POST_DETAIL_LOADING_SUCCESS,
   POST_LOADING_FAILURE,
   POST_LOADING_REQUEST,
   POST_LOADING_SUCCESS,
@@ -30,7 +33,7 @@ function* loadPosts(action) {
       payload: e.response,
     });
     // 실패하면 홈으로 화면을 전환해
-    yield push('/');
+    yield put(push('/'));
   }
 }
 
@@ -81,6 +84,40 @@ function* watchUploadPosts() {
   yield takeEvery(POST_UPLOADING_REQUEST, uploadPosts);
 }
 
+// Post Detail
+
+const loadPostDetailAPI = payload => {
+  console.log(payload, '넘어온 payload');
+  const result = axios.get(`/api/post/${payload}`);
+  console.log(result);
+  return result;
+};
+
+function* loadPostDetail(action) {
+  try {
+    const result = yield call(loadPostDetailAPI, action.payload);
+    console.log(result, 'loadPostDetailAPI, action.payload');
+    yield put({
+      type: POST_DETAIL_LOADING_SUCCESS,
+      payload: result.data,
+    });
+  } catch (e) {
+    yield put({
+      type: POST_DETAIL_LOADING_FAILURE,
+      payload: e,
+    });
+    yield put(push('/'));
+  }
+}
+
+function* watchLoadPostDetail() {
+  yield takeEvery(POST_DETAIL_LOADING_REQUEST, loadPostDetail);
+}
+
 export default function* postSaga() {
-  yield all([fork(watchLoadPosts), fork(watchUploadPosts)]);
+  yield all([
+    fork(watchLoadPosts),
+    fork(watchUploadPosts),
+    fork(watchLoadPostDetail),
+  ]);
 }
