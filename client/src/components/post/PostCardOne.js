@@ -13,7 +13,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 
 const PostCardOne = ({ posts }) => {
-  console.log(posts, '카드원으로 넘어온 값');
   return (
     <>
       {Array.isArray(posts)

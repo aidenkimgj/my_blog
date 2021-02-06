@@ -78,6 +78,7 @@ function* watchLogoutUser() {
 // User loading
 
 const userLoadingAPI = token => {
+  // config에 임의로 값을 더 달때는 이렇게 써야함
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -89,7 +90,7 @@ const userLoadingAPI = token => {
   console.log(config);
   // 리턴 되는 장소는 call()을 부른곳이다 (유저가 존재하는지 확인하는 것이기 때문에 get을 씀)
   const result = axios.get('/api/auth/user', config);
-  console.log(result, '받아온 값');
+  console.log(result, 'come from server');
   return result;
 };
 

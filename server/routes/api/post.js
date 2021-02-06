@@ -77,7 +77,7 @@ router.post('/', auth, uploadS3.none(), async (req, res, next) => {
       title,
       contents,
       fileUrl,
-      creator,
+      creator: req.user.id,
       date: moment().format('MM-DD-YYYY hh:mm:ss'),
     });
 
@@ -128,14 +128,15 @@ router.post('/', auth, uploadS3.none(), async (req, res, next) => {
  * @route     GET   api/post/:id
  * @desc      Detail post
  * @access    Public
+ *
  */
 
 router.get('/:id', async (req, res, next) => {
   try {
     const post = await Post.findById(req.params.id)
-
       .populate('creator', 'name')
-      .populate({ path: 'category', select: 'categoryName' });
+      .populate({ path: 'category', select: 'categoryName' })
+      .exec();
     post.views += 1;
     post.save();
     console.log(post);

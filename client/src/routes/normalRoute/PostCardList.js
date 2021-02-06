@@ -8,7 +8,7 @@ import PostCardOne from '../../components/post/PostCardOne';
 
 const PostCardList = () => {
   const { posts } = useSelector(state => state.post);
-  console.log(posts, '넘어온 값');
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const PostCardList = () => {
 
   return (
     <>
-      <Helmet title="Home" />
+      <Helmet title="Aiden's Blog" />
       <Row>{posts ? <PostCardOne posts={posts} /> : GrowingSpinner}</Row>
     </>
   );
