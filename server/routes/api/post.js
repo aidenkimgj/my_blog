@@ -6,6 +6,7 @@ import moment from 'moment';
 import Post from '../../models/post';
 import Category from '../../models/category';
 import User from '../../models/user';
+import Comment from '../../models/comment';
 
 const router = express.Router();
 
@@ -39,10 +40,13 @@ const uploadS3 = multer({
   limits: { fileSize: 100 * 1024 * 1024 },
 });
 
+// api/post
+
 /*
  * @route     POST   api/post/image
- * @desc      Create a post
+ * @desc      upload image
  * @access    Private
+ *
  */
 
 // 경로를 upload로 보내는데 사진을 여러개 보낼 수 있고 5개까지 제한하겠다는 말임 (array 부분이 single이 되면 이미지 파일 한개만 받겠다는 뜻)
@@ -56,7 +60,13 @@ router.post('/image', uploadS3.array('upload', 5), async (req, res, next) => {
   }
 });
 
-// api/post
+/*
+ * @route     GET   api/post/
+ * @desc      get all post
+ * @access    Public
+ *
+ */
+
 router.get('/', async (req, res) => {
   const postFindResult = await Post.find();
 
@@ -68,7 +78,9 @@ router.get('/', async (req, res) => {
  * @route     POST   api/post/
  * @desc      Create a post
  * @access    Private
+ *
  */
+
 router.post('/', auth, uploadS3.none(), async (req, res, next) => {
   try {
     console.log(req, 'req');
@@ -134,15 +146,75 @@ router.post('/', auth, uploadS3.none(), async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const post = await Post.findById(req.params.id)
-      .populate('creator', 'name')
-      .populate({ path: 'category', select: 'categoryName' })
-      .exec();
+      .populate('creator', 'name') // 앞에가 path고 뒤에가 select 임
+      .populate({ path: 'category', select: 'categoryName' });
+    // .exec();
     post.views += 1;
     post.save();
     console.log(post);
     res.json(post);
   } catch (e) {
     console.error(e);
+    next(e);
+  }
+});
+
+// Comments route
+/*
+ * @route     GET   api/post/:id/comments
+ * @desc      Get All Comments
+ * @access    Public
+ *
+ */
+router.get('/:id/comments', async (req, res) => {
+  console.log(req.params.id, 'ID');
+
+  try {
+    const comment = await Post.findById(req.params.id).populate('comments');
+
+    console.log(comment, 'comment load');
+    res.json(comment);
+  } catch (e) {
+    console.error(e);
+  }
+});
+
+/*
+ * @route     POST   api/post/:id/comments
+ * @desc      Create a post
+ * @access    Private
+ *
+ */
+
+router.post('/:id/comments', async (req, res, next) => {
+  console.log(req, 'comments');
+  const newComment = await Comment.create({
+    contents: req.body.contents,
+    creator: req.body.userId,
+    creatorName: req.body.userName,
+    post: req.body.id,
+    date: moment().format('MM-DD-YYYY hh:mm:ss'),
+  });
+  console.log(newComment, 'newComment');
+
+  try {
+    await Post.findByIdAndUpdate(req.body.id, {
+      $push: {
+        comments: newComment._id,
+      },
+    });
+    // 어떤 사람을 찾아서 그 사람이 어떤 포스트에 어떤 코멘트를 썼는지 업데이트 해준다
+    await User.findByIdAndUpdate(req.body.userId, {
+      $push: {
+        comments: {
+          post_id: req.body.id,
+          comment_id: newComment._id,
+        },
+      },
+    });
+    res.json(newComment);
+  } catch (e) {
+    console.log(e);
     next(e);
   }
 });
