@@ -7,7 +7,7 @@ import {
   USER_LOADING_REQUEST,
 } from '../../redux/types';
 import { Link } from 'react-router-dom';
-import { Button, Col, Row } from 'reactstrap';
+import { Button, Col, Container, Row } from 'reactstrap';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import { useParams } from 'react-router-dom';
 import { GrowingSpinner } from '../../components/spinner/Spinner';
@@ -19,6 +19,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import BalloonEditor from '@ckeditor/ckeditor5-editor-balloon/src/ballooneditor';
 import { editorConfiguration } from '../../components/editor/CKEditor5Config';
+import Comments from '../../components/comments/Comments';
 
 const PostDetail = req => {
   console.log(req);
@@ -29,6 +30,7 @@ const PostDetail = req => {
     state => state.post
   );
   const { userId, userName } = useSelector(state => state.auth);
+  const { comments } = useSelector(state => state.comment);
 
   useEffect(() => {
     dispatch({
@@ -39,7 +41,7 @@ const PostDetail = req => {
       type: USER_LOADING_REQUEST,
       payload: localStorage.getItem('token'),
     });
-  }, []);
+  }, [dispatch, id]);
 
   const onDeleteClick = () => {
     dispatch({
@@ -131,6 +133,37 @@ const PostDetail = req => {
               config={editorConfiguration}
               disabled="true"
             />
+          </Row>
+          <Row>
+            <Container className="mb-3 border border-blue rounded">
+              <Comments id={id} userId={userId} userName={userName} />
+              {Array.isArray(comments)
+                ? comments.map(
+                    ({ contents, creator, date, _id, creatorName }) => (
+                      <div key={_id}>
+                        <Row className="justify-content-between p-2">
+                          <div className="font-weight-bold">
+                            {creatorName ? creatorName : creator}
+                          </div>
+                          <div className="text-small">
+                            <span className="font-weight-bold">
+                              {date.split(' ')[0]}
+                            </span>
+                            <span className="font-weight-light">
+                              {' '}
+                              {date.split(' ')[1]}
+                            </span>
+                          </div>
+                        </Row>
+                        <Row className="p-2">
+                          <div>{contents}</div>
+                        </Row>
+                        <hr />
+                      </div>
+                    )
+                  )
+                : 'Creator'}
+            </Container>
           </Row>
         </>
       ) : null}
