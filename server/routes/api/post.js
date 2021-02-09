@@ -132,7 +132,7 @@ router.post('/', auth, uploadS3.none(), async (req, res, next) => {
     }
     return res.redirect(`/api/post/${newPost._id}`);
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 });
 
@@ -185,7 +185,6 @@ router.get('/:id/comments', async (req, res) => {
  * @access    Private
  *
  */
-
 router.post('/:id/comments', async (req, res, next) => {
   console.log(req, 'comments');
   const newComment = await Comment.create({
@@ -213,6 +212,83 @@ router.post('/:id/comments', async (req, res, next) => {
       },
     });
     res.json(newComment);
+  } catch (e) {
+    console.error(e);
+    next(e);
+  }
+});
+
+// Delete route
+/*
+ * @route    Delete api/post/:id
+ * @desc     Delete a Post
+ * @access   Private
+ *
+ */
+router.delete('/:id', auth, async (req, res) => {
+  await Post.deleteMany({ _id: req.params.id });
+  await Comment.deleteMany({ post: req.params.id });
+  await User.findByIdAndUpdate(req.user.id, {
+    // 몽고db에서 배열에서 값을 빼낼때 pull을 쓴다
+    $pull: {
+      posts: req.params.id,
+      comments: { post_id: req.params.id },
+    },
+  });
+  const CategoryUpdateResult = await Category.findOneAndUpdate(
+    { posts: req.params.id },
+    { $pull: { posts: req.params.id } },
+    { new: true }
+  );
+
+  if (CategoryUpdateResult.posts.length === 0) {
+    await Category.deleteMany({ _id: CategoryUpdateResult });
+  }
+  return res.json({ success: true });
+});
+
+// Edit route
+/*
+ * @route    GET api/post/:id/edit
+ * @desc     Get post that need to be edited
+ * @access   Private
+ *
+ */
+router.get('/:id/edit', auth, async (req, res, next) => {
+  try {
+    const post = await Post.findById(req.params.id).populate('creator', 'name');
+    res.json(post);
+  } catch (e) {
+    console.error(e);
+  }
+});
+
+/*
+ * @route    POST api/post/:id/edit
+ * @desc     Edit Post
+ * @access   Private
+ *
+ */
+router.post('/:id/edit', auth, async (req, res, next) => {
+  console.log(req, 'api/post/:id/edit');
+  // 구조분해 문법을 쓰는것이 조금 더 깔끔해 진다.
+  const {
+    body: { title, contents, fileUrl, id },
+  } = req;
+
+  try {
+    const modified_post = await Post.findByIdAndUpdate(
+      id,
+      {
+        title,
+        contents,
+        fileUrl,
+        date: moment().format('MM-DD-YYYY hh:mm:ss'),
+      },
+      { new: true }
+    );
+    console.log(modified_post, 'edit modified');
+    res.redirect(`/api/post/${modified_post.id}`);
   } catch (e) {
     console.log(e);
     next(e);
