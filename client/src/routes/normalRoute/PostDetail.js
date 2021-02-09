@@ -21,8 +21,7 @@ import BalloonEditor from '@ckeditor/ckeditor5-editor-balloon/src/ballooneditor'
 import { editorConfiguration } from '../../components/editor/CKEditor5Config';
 import Comments from '../../components/comments/Comments';
 
-const PostDetail = req => {
-  console.log(req);
+const PostDetail = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   console.log(id, 'post detail address');
