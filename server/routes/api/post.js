@@ -1,12 +1,12 @@
 import express from 'express';
-import auth from '../../middleware/auth';
+import auth from '../../middleware/auth.js';
 import moment from 'moment';
 
 // Model
-import Post from '../../models/post';
-import Category from '../../models/category';
-import User from '../../models/user';
-import Comment from '../../models/comment';
+import Post from '../../models/post.js';
+import Category from '../../models/category.js';
+import User from '../../models/user.js';
+import Comment from '../../models/comment.js';
 
 const router = express.Router();
 

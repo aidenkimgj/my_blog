@@ -1,5 +1,5 @@
 import moment from 'moment';
-import mongoose, { MongooseDocument } from 'mongoose';
+import mongoose from 'mongoose';
 
 // Create Schema
 

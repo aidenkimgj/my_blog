@@ -1,15 +1,15 @@
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
-import config from './config';
+import config from './config/index.js';
 import hpp from 'hpp';
 import helmet from 'helmet';
 import morgan from 'morgan';
 
 // Routes
-import postRoutes from './routes/api/post';
-import userRoutes from './routes/api/user';
-import authRoutes from './routes/api/auth';
+import postRoutes from './routes/api/post.js';
+import userRoutes from './routes/api/user.js';
+import authRoutes from './routes/api/auth.js';
 
 const app = express();
 const { MONGO_URI } = config;
