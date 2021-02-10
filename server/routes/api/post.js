@@ -69,9 +69,10 @@ router.post('/image', uploadS3.array('upload', 5), async (req, res, next) => {
 
 router.get('/', async (req, res) => {
   const postFindResult = await Post.find();
-
-  console.log(postFindResult, 'All Post Get');
-  res.json(postFindResult);
+  const categoryFindResult = await Category.find();
+  const result = { postFindResult, categoryFindResult };
+  console.log(result, 'All Post Get');
+  res.json(result);
 });
 
 /*
