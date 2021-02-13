@@ -1,5 +1,8 @@
 import axios from 'axios';
 import {
+  CATEGORY_FIND_FAILURE,
+  CATEGORY_FIND_REQUEST,
+  CATEGORY_FIND_SUCCESS,
   POST_DELETE_FAILURE,
   POST_DELETE_REQUEST,
   POST_DELETE_SUCCESS,
@@ -232,6 +235,31 @@ function* watchPostEditUpload() {
   yield takeEvery(POST_EDIT_UPLOADING_REQUEST, PostEditUpload);
 }
 
+// Category Find
+const CategoryFindAPI = payload => {
+  // encodeURIComponent() 함수는 URI의 특정한 문자를 UTF-8로 인코딩해 하나, 둘 셋, 혹은 네 개의 연속된 이스케이프 문자로 나타낸다(두 개의 대리 문자로 이루어진 문자만 이스케이프 문자 네 개로 변환 됨)
+  return axios.get(`/api/post/category/${encodeURIComponent(payload)}`);
+};
+
+function* CategoryFind(action) {
+  try {
+    const result = yield call(CategoryFindAPI, action.payload);
+    yield put({
+      type: CATEGORY_FIND_SUCCESS,
+      payload: result.data,
+    });
+  } catch (e) {
+    yield put({
+      type: CATEGORY_FIND_FAILURE,
+      payload: e,
+    });
+  }
+}
+
+function* watchCategoryFind() {
+  yield takeEvery(CATEGORY_FIND_REQUEST, CategoryFind);
+}
+
 export default function* postSaga() {
   yield all([
     fork(watchLoadPosts),
@@ -240,5 +268,6 @@ export default function* postSaga() {
     fork(watchDeletePost),
     fork(watchPostEditLoad),
     fork(watchPostEditUpload),
+    fork(watchCategoryFind),
   ]);
 }
