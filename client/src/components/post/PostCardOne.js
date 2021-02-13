@@ -23,7 +23,7 @@ const PostCardOne = ({ posts }) => {
                   to={`/post/${_id}`}
                   className="text-dark text-decoration-none"
                 >
-                  <Card className="mb-3">
+                  <Card className="mb-3 card">
                     <CardImg top alt="card img" src={fileUrl} />
                     <CardBody>
                       <CardTitle className="text-truncate d-flex justify-content-between">
@@ -37,9 +37,10 @@ const PostCardOne = ({ posts }) => {
                           <span>{views}</span>
                         </span>
                       </CardTitle>
-                      <Row>
-                        <Button color="primary" className="p-2 btn-block">
-                          More <Badge color="light">{comments.length}</Badge>
+                      <Row className="comment-btn">
+                        <Button className="p-2 btn-block">
+                          Comments{' '}
+                          <Badge color="light">{comments.length}</Badge>
                         </Button>
                       </Row>
                     </CardBody>
