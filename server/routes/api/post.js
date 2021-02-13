@@ -291,7 +291,34 @@ router.post('/:id/edit', auth, async (req, res, next) => {
     console.log(modified_post, 'edit modified');
     res.redirect(`/api/post/${modified_post.id}`);
   } catch (e) {
-    console.log(e);
+    console.error(e);
+    next(e);
+  }
+});
+
+/*
+ * @route    GET api/post/category/:categoryName
+ * @desc     category get
+ * @access   Public
+ *
+ */
+router.get('/category/:categoryName', async (req, res, next) => {
+  try {
+    const result = await Category.findOne(
+      {
+        categoryName: {
+          // 이것은 정규식 표현법이다 카테고리 이름을 가지고 있는 것을 대문자 소문자 구분 없이 찾는다는 것
+          $regex: req.params.categoryName,
+          $options: 'i',
+        },
+      },
+      // 위에 작성한 필터를 바탕으로 posts 에서 찾으라는 의미
+      'posts'
+    ).populate({ path: 'posts' });
+    console.log(result, 'Category Find result');
+    res.json(result);
+  } catch (e) {
+    console.error(e);
     next(e);
   }
 });
