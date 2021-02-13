@@ -23,7 +23,7 @@ const PostCardList = () => {
   return (
     <>
       <Helmet title="Aiden's Blog" />
-      <Row className="border-bottom border-top border-primary py-2 mb-3">
+      <Row className="border-bottom border-top border-muted py-2 mb-3">
         <Category posts={categoryFindResult} />
       </Row>
       <Row>{posts ? <PostCardOne posts={posts} /> : GrowingSpinner}</Row>
