@@ -1,7 +1,32 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { Row } from 'reactstrap';
+import { CATEGORY_FIND_REQUEST } from '../../redux/types';
+import PostCardOne from '../../components/post/PostCardOne';
 
 const CategoryResult = () => {
-  return <h1>Category Result</h1>;
+  const dispatch = useDispatch();
+  const { categoryName } = useParams();
+  const { categoryFindResult } = useSelector(state => state.post);
+  console.log(categoryName);
+  console.log(categoryFindResult);
+
+  useEffect(() => {
+    dispatch({
+      type: CATEGORY_FIND_REQUEST,
+      payload: categoryName,
+    });
+  }, [dispatch, categoryName]);
+
+  return (
+    <div>
+      <h1>Category: "{categoryName}"</h1>
+      <Row>
+        <PostCardOne posts={categoryFindResult.posts} />
+      </Row>
+    </div>
+  );
 };
 
 export default CategoryResult;
