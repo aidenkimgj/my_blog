@@ -1,4 +1,7 @@
 import {
+  CATEGORY_FIND_FAILURE,
+  CATEGORY_FIND_REQUEST,
+  CATEGORY_FIND_SUCCESS,
   POST_DETAIL_LOADING_FAILURE,
   POST_DETAIL_LOADING_REQUEST,
   POST_DETAIL_LOADING_SUCCESS,
@@ -105,6 +108,25 @@ const postReducer = (state = initialState, action) => {
         error: action.payload,
         loading: false,
       };
+    case CATEGORY_FIND_REQUEST:
+      return {
+        ...state,
+        posts: [],
+        loading: true,
+      };
+    case CATEGORY_FIND_SUCCESS:
+      return {
+        ...state,
+        categoryFindResult: action.payload,
+        loading: false,
+      };
+    case CATEGORY_FIND_FAILURE:
+      return {
+        ...state,
+        categoryFindResult: action.payload,
+        loading: false,
+      };
+
     default:
       return state;
   }
