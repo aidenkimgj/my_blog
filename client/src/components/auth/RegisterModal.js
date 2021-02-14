@@ -66,7 +66,7 @@ const RegisterModal = () => {
           <strong>Register</strong>
         </Button>
       </NavLink>
-      <Modal isOpen={modal} toggle={handleToggle} className="RegisterModal">
+      <Modal isOpen={modal} toggle={handleToggle} className="registerModal">
         <ModalHeader toggle={handleToggle}>Register</ModalHeader>
         <ModalBody>
           {localMsg ? <Alert color="danger">{localMsg}</Alert> : null}
