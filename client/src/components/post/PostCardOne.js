@@ -23,7 +23,7 @@ const PostCardOne = ({ posts }) => {
                   to={`/post/${_id}`}
                   className="text-dark text-decoration-none"
                 >
-                  <Card className="mb-3 card">
+                  <Card className="mb-3">
                     <CardImg top alt="card img" src={fileUrl} />
                     <CardBody>
                       <CardTitle className="text-truncate d-flex justify-content-between">
