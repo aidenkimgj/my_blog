@@ -7,9 +7,9 @@ import store, { history } from './store';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/scss/base.scss';
-import LoadUser from './components/auth/LoadUser';
+import loadUser from './components/auth/loadUser';
 
-LoadUser();
+loadUser();
 
 ReactDOM.render(
   <Provider store={store}>
