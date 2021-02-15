@@ -2,10 +2,13 @@
 @import './header';
 @import './navbar';
 @import './login';
+@import './register';
 @import './post-card-one';
 @import './ckeditor';
 @import './comments';
 @import './category';
+@import './profile';
+@import './search';
 
 #main-body {
   min-height: 90vh;
