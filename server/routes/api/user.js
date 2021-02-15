@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import config from '../../config/index.js';
 const { JWT_SECRET } = config;
+import auth from '../../middleware/auth.js';
 
 // Model
 import User from '../../models/user.js';
@@ -21,11 +22,12 @@ router.get('/', async (req, res) => {
     if (!users) throw Error('No users');
     res.status(200).json(users);
   } catch (e) {
-    console.log(e);
+    console.error(e);
     // 만약에 에러가 나오면 400 코드를 보내서 실패 했다고 알려줌 json을 사용하여 메시지를 담아 보낸다.
     res.status(400).json({ msg: e.message });
   }
 });
+
 /*
  * @routes     POST api/user
  * @desc       Register user
@@ -82,6 +84,44 @@ router.post('/', (req, res) => {
       });
     });
   });
+});
+
+/*
+ * @routes     POST api/user/:username/profile
+ * @desc       update user info (password)
+ * @access     private
+ */
+router.post('/:userName/profile', auth, async (req, res) => {
+  try {
+    const { previousPassword, password, rePassword, userId } = req.body;
+    console.log(req.body, 'userName Profile');
+    const result = await User.findById(userId, 'password');
+
+    bcrypt.compare(previousPassword, result.password).then(isMatch => {
+      if (!isMatch) {
+        return res.status(400).json({
+          match_msg: 'Does not match the existing password',
+        });
+      } else {
+        if (password === rePassword) {
+          bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(password, salt, (err, hash) => {
+              if (err) throw err;
+              result.password = hash;
+              result.save();
+            });
+          });
+          res.status(200).json({ success_msg: 'Password update successful' });
+        } else {
+          res
+            .status(400)
+            .json({ fail_msg: 'The new password does not match each other' });
+        }
+      }
+    });
+  } catch (e) {
+    console.error(e);
+  }
 });
 
 export default router;
