@@ -21,6 +21,9 @@ import {
   POST_UPLOADING_FAILURE,
   POST_UPLOADING_REQUEST,
   POST_UPLOADING_SUCCESS,
+  SEARCH_FAILURE,
+  SEARCH_REQUEST,
+  SEARCH_SUCCESS,
 } from '../types';
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
@@ -237,7 +240,9 @@ function* watchPostEditUpload() {
 
 // Category Find
 const CategoryFindAPI = payload => {
-  // encodeURIComponent() 함수는 URI의 특정한 문자를 UTF-8로 인코딩해 하나, 둘 셋, 혹은 네 개의 연속된 이스케이프 문자로 나타낸다(두 개의 대리 문자로 이루어진 문자만 이스케이프 문자 네 개로 변환 됨)
+  /* 
+  encodeURIComponent() 함수는 URI의 특정한 문자를 UTF-8로 인코딩해 준다 넘어가는 값이 text="test=&테스트" 이와 같이 text라는 필드 값이 test=&테스트인 경우 그냥 encodeURI()로 인코딩 하면, '=' 나 '&'는 인코딩되지 않아서 필드값을 처리할 때 데이터값이 아닌 여러개의 필드를 넘기는 명령어로 인식할 수 있기 때문이다. 하지만, "http://test.com/test.php?text=테스트" 와 같은 URL 전체를 encodeURIComponent()로 인코딩하게 되면 : / ? 를 모두 인코딩하여 주소를 인식할 수 없게 된다.
+   */
   return axios.get(`/api/post/category/${encodeURIComponent(payload)}`);
 };
 
@@ -260,6 +265,33 @@ function* watchCategoryFind() {
   yield takeEvery(CATEGORY_FIND_REQUEST, CategoryFind);
 }
 
+// Search Find
+const SearchResultAPI = payload => {
+  return axios.get(`/api/search/${encodeURIComponent(payload)}`);
+};
+
+function* SearchResult(action) {
+  console.log(action.payload, '사가는 들어오나?');
+  try {
+    const result = yield call(SearchResultAPI, action.payload);
+    yield put({
+      type: SEARCH_SUCCESS,
+      payload: result.data,
+    });
+    yield put(push(`/search/${encodeURIComponent(action.payload)}`));
+  } catch (e) {
+    yield put({
+      type: SEARCH_FAILURE,
+      payload: e,
+    });
+    yield put(push('/'));
+  }
+}
+
+function* watchSearchResult() {
+  yield takeEvery(SEARCH_REQUEST, SearchResult);
+}
+
 export default function* postSaga() {
   yield all([
     fork(watchLoadPosts),
@@ -269,5 +301,6 @@ export default function* postSaga() {
     fork(watchPostEditLoad),
     fork(watchPostEditUpload),
     fork(watchCategoryFind),
+    fork(watchSearchResult),
   ]);
 }
