@@ -31,12 +31,12 @@ import { push } from 'connected-react-router';
 // All Posts load
 
 const loadPostAPI = postData => {
-  return axios.get('/api/post');
+  return axios.get(`/api/post/skip/${postData}`);
 };
 
 function* loadPosts(action) {
   try {
-    const result = yield call(loadPostAPI);
+    const result = yield call(loadPostAPI, action.payload);
     console.log(result, 'loadPosts');
     yield put({
       type: POST_LOADING_SUCCESS,
