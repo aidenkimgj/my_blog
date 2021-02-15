@@ -10,6 +10,9 @@ import {
   LOGOUT_FAILURE,
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
+  PASSWORD_EDIT_UPLOADING_FAILURE,
+  PASSWORD_EDIT_UPLOADING_REQUEST,
+  PASSWORD_EDIT_UPLOADING_SUCCESS,
   REGISTER_FAILURE,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
@@ -164,6 +167,43 @@ function* watchClearError() {
   yield takeEvery(CLEAR_ERROR_REQUEST, clearError);
 }
 
+// Edit Password
+
+const EditPasswordAPI = payload => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  const token = payload.token;
+
+  if (token) {
+    config.headers['x-auth-token'] = token;
+  }
+  return axios.post(`/api/user/${payload.userName}/profile`, payload, config);
+};
+
+function* EditPassword(action) {
+  try {
+    console.log(action, 'EditPassword');
+    const result = yield call(EditPasswordAPI, action.payload);
+    console.log(result);
+    yield put({
+      type: PASSWORD_EDIT_UPLOADING_SUCCESS,
+      payload: result,
+    });
+  } catch (e) {
+    yield put({
+      type: PASSWORD_EDIT_UPLOADING_FAILURE,
+      payload: e.response,
+    });
+  }
+}
+
+function* watchEditPassword() {
+  yield takeEvery(PASSWORD_EDIT_UPLOADING_REQUEST, EditPassword);
+}
+
 export default function* authSaga() {
   // fork() 매개변수로 전달된 함수를 비동기적으로 실행
   yield all([
@@ -172,5 +212,6 @@ export default function* authSaga() {
     fork(watchUserLoading),
     fork(watchRegisterUser),
     fork(watchClearError),
+    fork(watchEditPassword),
   ]);
 }
