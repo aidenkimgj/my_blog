@@ -65,7 +65,7 @@ const Profile = () => {
     dispatch({
       type: CLEAR_ERROR_REQUEST,
     });
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

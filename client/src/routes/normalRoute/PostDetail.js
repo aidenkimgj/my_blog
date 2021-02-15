@@ -89,14 +89,14 @@ const PostDetail = () => {
   const Body = (
     <>
       {userId === creatorId ? OwnerButtons : GuestButton}
-      <Row className="border-bottom border-top border-primary p-3 mb-3 d-flex justify-content-between">
+      <Row className="border-bottom border-top border-muted p-3 mb-3 d-flex justify-content-between">
         {(() => {
           if (postDetail && postDetail.creator) {
             return (
               <>
                 <div className="font-weight-bold text-big">
                   <span className="mr-3">
-                    <Button color="info">
+                    <Button className="category_btn" color="info">
                       #{postDetail.category.categoryName}
                     </Button>
                   </span>
