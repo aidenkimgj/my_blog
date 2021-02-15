@@ -14,7 +14,7 @@ const Category = ({ posts }) => {
                 className="text-dark text-decoration-none"
               >
                 <span className="ml-1">
-                  <Button color="info">
+                  <Button>
                     #{categoryName} <Badge color="light">{posts.length}</Badge>
                   </Button>
                 </span>
