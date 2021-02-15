@@ -21,7 +21,7 @@ const CategoryResult = () => {
 
   return (
     <div>
-      <h1>Category: "{categoryName}"</h1>
+      <h1 className="category_head">Category: "{categoryName}"</h1>
       <Row>
         <PostCardOne posts={categoryFindResult.posts} />
       </Row>

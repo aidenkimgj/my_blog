@@ -107,7 +107,7 @@ const AppNavbar = () => {
     <>
       <Navbar color="dark" dark expand="lg" className="sticky-top">
         <Container>
-          <Link to="/" className="text-white text-decoration-none">
+          <Link to="/" className="text-white text-decoration-none blog-name">
             <b className="blog-name">Aiden's Blog</b>
           </Link>
           <NavbarToggler onClick={handleToggle} />

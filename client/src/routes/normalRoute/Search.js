@@ -20,7 +20,7 @@ const Search = () => {
   }, [dispatch, searchTerm]);
   return (
     <div>
-      <h1>Search Result: "{searchTerm}"</h1>
+      <h1 className="search_head">Search Result: "{searchTerm}"</h1>
       <Row>
         <PostCardOne posts={searchResult} />
       </Row>
