@@ -14,6 +14,9 @@ import {
   POST_LOADING_FAILURE,
   POST_LOADING_REQUEST,
   POST_LOADING_SUCCESS,
+  SEARCH_FAILURE,
+  SEARCH_REQUEST,
+  SEARCH_SUCCESS,
 } from '../types';
 
 const initialState = {
@@ -52,12 +55,14 @@ const postReducer = (state = initialState, action) => {
         ...state,
         loaidng: false,
       };
+
     case POST_DETAIL_LOADING_REQUEST:
       return {
         ...state,
         posts: [],
         loading: true,
       };
+
     case POST_DETAIL_LOADING_SUCCESS:
       return {
         ...state,
@@ -66,35 +71,41 @@ const postReducer = (state = initialState, action) => {
         title: action.payload.title,
         loading: false,
       };
+
     case POST_DETAIL_LOADING_FAILURE:
       return {
         ...state,
         error: action.payload,
         loading: false,
       };
+
     case POST_EDIT_LOADING_REQUEST:
       return {
         ...state,
         posts: [],
         loading: true,
       };
+
     case POST_EDIT_LOADING_SUCCESS:
       return {
         ...state,
         postDetail: action.payload,
         loading: false,
       };
+
     case POST_EDIT_LOADING_FAILURE:
       return {
         ...state,
         error: action.payload,
         loading: false,
       };
+
     case POST_EDIT_UPLOADING_REQUEST:
       return {
         ...state,
         loading: true,
       };
+
     case POST_EDIT_UPLOADING_SUCCESS:
       return {
         ...state,
@@ -102,28 +113,55 @@ const postReducer = (state = initialState, action) => {
         isAuthenticated: true,
         loading: false,
       };
+
     case POST_EDIT_UPLOADING_FAILURE:
       return {
         ...state,
         error: action.payload,
         loading: false,
       };
+
     case CATEGORY_FIND_REQUEST:
       return {
         ...state,
         posts: [],
         loading: true,
       };
+
     case CATEGORY_FIND_SUCCESS:
       return {
         ...state,
         categoryFindResult: action.payload,
         loading: false,
       };
+
     case CATEGORY_FIND_FAILURE:
       return {
         ...state,
         categoryFindResult: action.payload,
+        loading: false,
+      };
+
+    case SEARCH_REQUEST:
+      return {
+        ...state,
+        posts: [],
+        searchBy: action.payload,
+        loading: true,
+      };
+
+    case SEARCH_SUCCESS:
+      return {
+        ...state,
+        searchBy: action.payload,
+        searchResult: action.payload,
+        loading: false,
+      };
+
+    case SEARCH_FAILURE:
+      return {
+        ...state,
+        searchResult: action.payload,
         loading: false,
       };
 
