@@ -10,6 +10,7 @@ import morgan from 'morgan';
 import postRoutes from './routes/api/post.js';
 import userRoutes from './routes/api/user.js';
 import authRoutes from './routes/api/auth.js';
+import searchRoutes from './routes/api/search.js';
 
 const app = express();
 const { MONGO_URI } = config;
@@ -37,12 +38,10 @@ mongoose
   });
 
 // Use routes
-app.get('/', (req, res) => {
-  res.send('HI');
-});
 
 app.use('/api/post', postRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/search', searchRoutes);
 
 export default app;
