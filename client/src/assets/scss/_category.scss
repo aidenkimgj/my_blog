@@ -3,16 +3,28 @@
     margin-bottom: 0.25rem;
   }
   button {
-    border-color: #8660f7;
+    border-color: #a98ff7;
     border-top-left-radius: 15px;
     border-bottom-right-radius: 15px;
-    background-color: #8660f7;
+    background-color: #a98ff7;
     font-weight: bold;
-    transition: #8660f7 500ms ease-in-out;
+    transition: #a98ff7 500ms ease-in-out;
     &:hover {
-      background-color: #a98ff7;
-      border-color: #a98ff7;
+      background-color: #9674aa;
+      border-color: #9674aa;
     }
+  }
+}
+.category_btn {
+  border-color: #a98ff7;
+  border-top-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+  background-color: #a98ff7;
+  font-weight: bold;
+  transition: #a98ff7 500ms ease-in-out;
+  &:hover {
+    background-color: #9674aa;
+    border-color: #9674aa;
   }
 }
 
