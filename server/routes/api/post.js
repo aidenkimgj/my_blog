@@ -1,6 +1,7 @@
 import express from 'express';
 import auth from '../../middleware/auth.js';
 import moment from 'moment';
+import '@babel/polyfill';
 
 // Model
 import Post from '../../models/post.js';
