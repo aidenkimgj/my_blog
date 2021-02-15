@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { SEARCH_REQUEST } from '../../redux/types';
+import { SEARCH_REQUEST } from '../../redux/types.js';
 import { Row } from 'reactstrap';
-import PostCardOne from '../../components/post/PostCardOne';
+import PostCardOne from '../../components/post/PostCardOne.js';
 
 const Search = () => {
   const dispatch = useDispatch();

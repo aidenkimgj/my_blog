@@ -1,5 +1,5 @@
-import { USER_LOADING_REQUEST } from '../../redux/types';
-import store from '../../store';
+import { USER_LOADING_REQUEST } from '../../redux/types.js';
+import store from '../../store.js';
 
 const loadUser = () => {
   try {

@@ -7,7 +7,7 @@ import {
   COMMENT_UPLOADING_SUCCESS,
   COMMENT_UPLOADING_REQUEST,
   COMMENT_UPLOADING_FAILURE,
-} from '../types';
+} from '../types.js';
 import { push } from 'connected-react-router';
 
 // Load Comment

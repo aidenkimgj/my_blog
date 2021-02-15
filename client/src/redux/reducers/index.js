@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
-import authReducer from './authReducer';
-import postReducer from './postReducer';
-import commentReducer from './commentReducer';
+import authReducer from './authReducer.js';
+import postReducer from './postReducer.js';
+import commentReducer from './commentReducer.js';
 
 const createRootreducer = history =>
   combineReducers({

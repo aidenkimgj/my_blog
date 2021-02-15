@@ -10,11 +10,11 @@ import {
   Form,
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import LoginModal from '../components/auth/LoginModal';
+import LoginModal from '../components/auth/LoginModal.js';
 import { useDispatch, useSelector } from 'react-redux';
-import { LOGOUT_REQUEST } from '../redux/types';
-import RegisterModal from './auth/RegisterModal';
-import SearchInput from './search/searchInput';
+import { LOGOUT_REQUEST } from '../redux/types.js';
+import RegisterModal from './auth/RegisterModal.js';
+import SearchInput from './search/searchInput.js';
 
 const AppNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);

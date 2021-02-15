@@ -5,12 +5,12 @@ import {
   POST_DELETE_REQUEST,
   POST_DETAIL_LOADING_REQUEST,
   USER_LOADING_REQUEST,
-} from '../../redux/types';
+} from '../../redux/types.js';
 import { Link } from 'react-router-dom';
 import { Button, Col, Container, Row } from 'reactstrap';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import { useParams } from 'react-router-dom';
-import { GrowingSpinner } from '../../components/spinner/Spinner';
+import { GrowingSpinner } from '../../components/spinner/Spinner.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEye,
@@ -18,8 +18,8 @@ import {
   faCommentDots,
 } from '@fortawesome/free-solid-svg-icons';
 import BalloonEditor from '@ckeditor/ckeditor5-editor-balloon/src/ballooneditor';
-import { editorConfiguration } from '../../components/editor/CKEditor5Config';
-import Comments from '../../components/comments/Comments';
+import { editorConfiguration } from '../../components/editor/CKEditor5Config.js';
+import Comments from '../../components/comments/Comments.js';
 
 const PostDetail = () => {
   const dispatch = useDispatch();

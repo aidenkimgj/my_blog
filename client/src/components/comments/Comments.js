@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import {
   COMMENT_UPLOADING_REQUEST,
   COMMENT_LOADING_REQUEST,
-} from '../../redux/types';
+} from '../../redux/types.js';
 import { Form, FormGroup, Input, Button, Row } from 'reactstrap';
 
 const Comments = ({ id, userName, userId }) => {

@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Form, Input } from 'reactstrap';
 import { useDispatch } from 'react-redux';
-import { SEARCH_REQUEST } from '../../redux/types';
+import { SEARCH_REQUEST } from '../../redux/types.js';
 
 const SearchInput = () => {
   const dispatch = useDispatch();

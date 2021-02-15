@@ -24,7 +24,7 @@ import {
   SEARCH_FAILURE,
   SEARCH_REQUEST,
   SEARCH_SUCCESS,
-} from '../types';
+} from '../types.js';
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 

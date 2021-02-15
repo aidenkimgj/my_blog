@@ -7,7 +7,7 @@ import store, { history } from './store';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/scss/base.scss';
-import loadUser from './components/auth/loadUser';
+import loadUser from './components/auth/loadUser.js';
 
 loadUser();
 

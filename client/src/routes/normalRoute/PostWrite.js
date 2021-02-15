@@ -11,9 +11,9 @@ import {
 } from 'reactstrap';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
-import { editorConfiguration } from '../../components/editor/CKEditor5Config';
-import Myinit from '../../components/editor/UploadAdapter';
-import { POST_UPLOADING_REQUEST } from '../../redux/types';
+import { editorConfiguration } from '../../components/editor/CKEditor5Config.js';
+import Myinit from '../../components/editor/UploadAdapter.js';
+import { POST_UPLOADING_REQUEST } from '../../redux/types.js';
 import dotenv from 'dotenv';
 dotenv.config();
 

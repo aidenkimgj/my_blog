@@ -12,7 +12,7 @@ import {
   ModalHeader,
   NavLink,
 } from 'reactstrap';
-import { CLEAR_ERROR_REQUEST, REGISTER_REQUEST } from '../../redux/types';
+import { CLEAR_ERROR_REQUEST, REGISTER_REQUEST } from '../../redux/types.js';
 
 const RegisterModal = () => {
   const [modal, setModal] = useState(false);

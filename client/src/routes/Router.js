@@ -1,20 +1,20 @@
 import React from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import AppNavbar from '../components/AppNavbar';
+import Header from '../components/Header.js';
+import Footer from '../components/Footer.js';
+import AppNavbar from '../components/AppNavbar.js';
 import { Container } from 'reactstrap';
-import PostCardList from './normalRoute/PostCardList';
-import PostWrite from './normalRoute/PostWrite';
-import PostDetail from './normalRoute/PostDetail';
-import PostEdit from './normalRoute/PostEdit';
-import CategoryResult from './normalRoute/CategoryResult';
-import Search from './normalRoute/Search';
-import Profile from './normalRoute/Profile';
+import PostCardList from './normalRoute/PostCardList.js';
+import PostWrite from './normalRoute/PostWrite.js';
+import PostDetail from './normalRoute/PostDetail.js';
+import PostEdit from './normalRoute/PostEdit.js';
+import CategoryResult from './normalRoute/CategoryResult.js';
+import Search from './normalRoute/Search.js';
+import Profile from './normalRoute/Profile.js';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import {
   EditProtectedRoute,
   ProfileProtectedRoute,
-} from './protectedRoute/ProtectedRoute';
+} from './protectedRoute/ProtectedRoute.js';
 
 const MyRouter = () => {
   return (

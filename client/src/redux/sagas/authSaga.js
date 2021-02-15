@@ -19,7 +19,7 @@ import {
   USER_LOADING_FAILURE,
   USER_LOADING_REQUEST,
   USER_LOADING_SUCCESS,
-} from '../types';
+} from '../types.js';
 
 // Login User API
 

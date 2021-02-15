@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import {
   CLEAR_ERROR_REQUEST,
   PASSWORD_EDIT_UPLOADING_REQUEST,
-} from '../../redux/types';
+} from '../../redux/types.js';
 import Helmet from 'react-helmet';
 import {
   Col,

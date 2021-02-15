@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Row } from 'reactstrap';
-import { CATEGORY_FIND_REQUEST } from '../../redux/types';
-import PostCardOne from '../../components/post/PostCardOne';
+import { CATEGORY_FIND_REQUEST } from '../../redux/types.js';
+import PostCardOne from '../../components/post/PostCardOne.js';
 
 const CategoryResult = () => {
   const dispatch = useDispatch();

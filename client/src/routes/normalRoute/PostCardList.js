@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { POST_LOADING_REQUEST } from '../../redux/types';
+import { POST_LOADING_REQUEST } from '../../redux/types.js';
 import { Helmet } from 'react-helmet';
 import { Alert, Row } from 'reactstrap';
-import { GrowingSpinner } from '../../components/spinner/Spinner';
-import PostCardOne from '../../components/post/PostCardOne';
-import Category from '../../components/post/Category';
+import { GrowingSpinner } from '../../components/spinner/Spinner.js';
+import PostCardOne from '../../components/post/PostCardOne.js';
+import Category from '../../components/post/Category.js';
 
 const PostCardList = () => {
   const { posts, categoryFindResult, loading, postCount } = useSelector(

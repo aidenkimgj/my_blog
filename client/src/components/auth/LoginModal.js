@@ -12,7 +12,7 @@ import {
   NavLink,
 } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { CLEAR_ERROR_REQUEST, LOGIN_REQUEST } from '../../redux/types';
+import { CLEAR_ERROR_REQUEST, LOGIN_REQUEST } from '../../redux/types.js';
 
 const LoginModal = () => {
   const [modal, setModal] = useState(false);

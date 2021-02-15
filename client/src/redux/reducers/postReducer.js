@@ -17,7 +17,7 @@ import {
   SEARCH_FAILURE,
   SEARCH_REQUEST,
   SEARCH_SUCCESS,
-} from '../types';
+} from '../types.js';
 
 const initialState = {
   isAuthenticated: '',

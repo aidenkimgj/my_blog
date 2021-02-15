@@ -1,14 +1,14 @@
-@import './footer';
-@import './header';
-@import './navbar';
-@import './login';
-@import './register';
-@import './post-card-one';
-@import './ckeditor';
-@import './comments';
-@import './category';
-@import './profile';
-@import './search';
+@import './footer.scss';
+@import './header.scss';
+@import './navbar.scss';
+@import './login.scss';
+@import './register.scss';
+@import './post-card-one.scss';
+@import './ckeditor.scss';
+@import './comments.scss';
+@import './category.scss';
+@import './profile.scss';
+@import './search.scss';
 
 #main-body {
   min-height: 90vh;
