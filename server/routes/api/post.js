@@ -62,17 +62,25 @@ router.post('/image', uploadS3.array('upload', 5), async (req, res, next) => {
 
 /*
  * @route     GET   api/post/
- * @desc      get all post
+ * @desc      more loading posts
  * @access    Public
  *
  */
-
-router.get('/', async (req, res) => {
-  const postFindResult = await Post.find();
-  const categoryFindResult = await Category.find();
-  const result = { postFindResult, categoryFindResult };
-  console.log(result, 'All Post Get');
-  res.json(result);
+router.get('/skip/:skip', async (req, res) => {
+  try {
+    const postCount = await Post.countDocuments();
+    const postFindResult = await Post.find()
+      .skip(Number(req.params.skip))
+      .limit(6)
+      .sort({ date: -1 });
+    const categoryFindResult = await Category.find();
+    const result = { postFindResult, categoryFindResult, postCount };
+    console.log(result, 'All Post Get');
+    res.json(result);
+  } catch (e) {
+    console.error(e);
+    res.json({ msg: 'No more posts' });
+  }
 });
 
 /*
