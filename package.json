@@ -5,8 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "server/server.js && cd client && npm start",
-    "heroku-postbuild": "cd client && npm install && npm run build",
+    "dev": "babel-watch server/server.js --ignore './client'",
+    "prebuild": "cd client && npm run build",
     "build": "babel server --out-dir build",
     "build:server": "babel server --out-dir build"
   },
