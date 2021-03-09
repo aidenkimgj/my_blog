@@ -21,7 +21,6 @@ const Header = () => {
               delay: 50,
             }}
           />
-          {/* <p>I'm Aiden who dreams of becoming a great developer in Calgary.</p> */}
         </Col>
       </Row>
     </div>
