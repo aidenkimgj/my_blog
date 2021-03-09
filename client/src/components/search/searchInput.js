@@ -2,6 +2,8 @@ import React, { useState, useRef } from 'react';
 import { Form, Input } from 'reactstrap';
 import { useDispatch } from 'react-redux';
 import { SEARCH_REQUEST } from '../../redux/types.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 const SearchInput = () => {
   const dispatch = useDispatch();
@@ -32,8 +34,17 @@ const SearchInput = () => {
 
   return (
     <>
-      <Form onSubmit={onSubmit} className="col mt-2 search">
-        <Input name="searchBy" onChange={onChange} innerRef={resetValue} />
+      <Form onSubmit={onSubmit} className="col mt-2">
+        <div className="search">
+          <FontAwesomeIcon icon={faSearch} className="search-icon" />
+          <Input
+            id="search"
+            name="searchBy"
+            onChange={onChange}
+            innerRef={resetValue}
+            placeholder="Search..."
+          />
+        </div>
       </Form>
     </>
   );

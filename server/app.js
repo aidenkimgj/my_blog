@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
-import mongoose from 'mongoose';
 import config from './config/index.js';
+import mongoose from 'mongoose';
 import hpp from 'hpp';
 import helmet from 'helmet';
 import morgan from 'morgan';
@@ -16,6 +16,7 @@ import searchRoutes from './routes/api/search.js';
 const app = express();
 const { MONGO_URI } = config;
 
+// NODE_ENV = production
 const prod = process.env.NODE_ENV === 'production';
 
 app.use(hpp());

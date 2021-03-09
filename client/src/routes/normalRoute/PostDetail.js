@@ -16,6 +16,9 @@ import {
   faEye,
   faPencilAlt,
   faCommentDots,
+  faHome,
+  faEdit,
+  faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import BalloonEditor from '@ckeditor/ckeditor5-editor-balloon/src/ballooneditor';
 import { editorConfiguration } from '../../components/editor/CKEditor5Config.js';
@@ -57,17 +60,17 @@ const PostDetail = () => {
       <Row className="d-flex justify-content-center pb-3">
         <Col className="col-md-3 mr-md-3">
           <Link to="/" className="btn btn-primary btn-block">
-            Home
+            Home <FontAwesomeIcon icon={faHome} />
           </Link>
         </Col>
         <Col className="col-md-3 mr-md-3">
           <Link to={`/post/${id}/edit`} className="btn btn-secondary btn-block">
-            Edit Post
+            Edit <FontAwesomeIcon icon={faEdit} />
           </Link>
         </Col>
         <Col className="col-md-3">
           <Button className="btn-danger btn-block" onClick={onDeleteClick}>
-            Delete
+            Delete <FontAwesomeIcon icon={faTrashAlt} />
           </Button>
         </Col>
       </Row>
@@ -77,9 +80,9 @@ const PostDetail = () => {
   const GuestButton = (
     <>
       <Row className="d-flex justify-content-center pb-3">
-        <Col className="col-sm-12 com-md-3">
+        <Col className="col-sm-4 com-md-3">
           <Link to="/" className="btn btn-primary btn-block">
-            Home
+            Home <FontAwesomeIcon icon={faHome} />
           </Link>
         </Col>
       </Row>
