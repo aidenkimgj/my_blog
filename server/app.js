@@ -20,7 +20,8 @@ const { MONGO_URI } = config;
 const prod = process.env.NODE_ENV === 'production';
 
 app.use(hpp());
-app.use(helmet());
+// 브라우저가 데이타베이스에 접근 못하게 막는것을 막아준다
+app.use(helmet({ contentSecurityPolicy: false }));
 
 app.use(cors({ origin: true, credentials: true }));
 app.use(morgan('dev'));

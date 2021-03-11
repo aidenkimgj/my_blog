@@ -73,6 +73,7 @@ const PostWrite = () => {
       }
 
       console.log(result_Img_Url, 'result_Img_Url');
+
       setValues({
         ...form,
         fileUrl: result_Img_Url,
