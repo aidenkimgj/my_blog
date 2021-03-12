@@ -23,8 +23,17 @@ app.use(hpp());
 // 브라우저가 데이타베이스에 접근 못하게 막는것을 막아준다
 app.use(helmet({ contentSecurityPolicy: false }));
 
-app.use(cors({ origin: true, credentials: true }));
-app.use(morgan('dev'));
+if (prod) {
+  app.use(
+    cors({
+      origin: ['https://aidenblog.ml', /\.aidenblog\.ml$/],
+      credentials: true,
+    })
+  );
+} else {
+  app.use(cors({ origin: true, credentials: true }));
+  app.use(morgan('dev'));
+}
 
 // 라우터를 쓸때 파싱을 하기위해 bodyParser를 사용해야 하지만 express에 내장되어 있는것을 사용할 수 있음 json형태로 브라우저에서 보내면 express 서버에서 json 형태로 해석해 달라는 이야기
 app.use(express.json());
@@ -43,6 +52,17 @@ mongoose
   });
 
 // Use routes
+
+// Route that replace http with https
+app.all('*', (req, res, next) => {
+  let protocol = req.headers['x-forward-proto'] || req.protocol;
+  if (protocol === 'https') {
+    next();
+  } else {
+    let to = `https://${req.hostname}${req.url}`;
+    res.redirect(to);
+  }
+});
 
 app.use('/api/post', postRoutes);
 app.use('/api/user', userRoutes);
