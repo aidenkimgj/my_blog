@@ -14,6 +14,11 @@ const Comments = ({ id, userName, userId }) => {
     await e.preventDefault();
     const { contents } = form;
     const token = localStorage.getItem('token');
+
+    if (!token) {
+      alert('Please log in to write a comment');
+      window.location.replace('/');
+    }
     const body = {
       contents,
       token,
